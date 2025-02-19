@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 필수</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center; /* 내용 가운데 정렬 */
+        }
+        .warning {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 20px; /* 경고 메시지 아래 여백 */
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        // JavaScript 코드는 여기에 (이전 답변의 개발자 도구 감지 코드 등)
+        // ... (이전 답변의 isDevToolsOpen, detectConsoleUsage, blockPage, checkDevTools 함수 등) ...
+
+        // (이전 답변의 JavaScript 코드 전체를 여기에 붙여넣기 하세요)
+
+        // 페이지를 이동시키기 직전에 경고창 띄우는 함수
+        function redirectWithAlert(url, message) {
+          alert(message); // 경고창 띄우기
+          window.location.href = url; // 페이지 이동
+        }
+
+        // 주기적 검사 함수
+        function checkDevTools() {
+            if (isDevToolsOpen() || detectConsoleUsage()) {
+
+              redirectWithAlert("https://example.com/blocked", "개발자 도구 사용이 감지되었습니다. 페이지를 이동합니다."); //경고+이동
+              clearInterval(intervalId); // 검사 중지
+            }
+        }
+         const intervalId = setInterval(checkDevTools, 500); // 0.5초마다
+
+        // 이미지 크기 변화 감지 부분 (devtoolsImage 관련 코드 - 이전 답변 내용 그대로)
+        let devtoolsImage = new Image();
+        let imageDetectionTriggered = false;
+
+        devtoolsImage.onload = function() {
+             if (!imageDetectionTriggered && (devtoolsImage.width > 100 || devtoolsImage.height > 100)) {
+                imageDetectionTriggered = true; // 한 번만 실행
+                redirectWithAlert("https://example.com/blocked", "개발자 도구 사용이 감지되었습니다(이미지). 페이지를 이동합니다."); //경고+이동
+             }
+        }
+        devtoolsImage.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
+
+
+
+    </script>
+
+    <noscript>
+        <div class="warning">
+            <h1>JavaScript 비활성화됨</h1>
+            <p>이 웹사이트는 JavaScript를 필요로 합니다. JavaScript를 활성화해주세요.</p>
+        </div>
+        <!-- meta refresh를 사용하여 리디렉션 + 경고 -->
+        <meta http-equiv="refresh" content="5;url=https://example.com/noscript">
+        <script>
+            // <noscript> 태그 안에서도 JavaScript 실행 가능 (아이러니하지만, 일부 브라우저에서 동작)
+            // 5초 후에 리디렉션되기 전에 경고창을 띄움
+            setTimeout(function() {
+                alert("JavaScript가 비활성화되어 있어 5초 후 다른 페이지로 이동합니다.");
+            }, 0); // 바로 실행 (0ms 지연)
+        </script>
+    </noscript>
+</body>
+</html>
